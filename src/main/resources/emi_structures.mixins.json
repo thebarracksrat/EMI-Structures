@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.silentvector.emistructures.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "JigsawStructureAccessor",
+    "ListPoolElementAccessor",
+    "RuleProcessorAccessor",
+    "SinglePoolElementAccessor",
+    "StructureTemplateAccessor",
+    "StructureTemplatePoolAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

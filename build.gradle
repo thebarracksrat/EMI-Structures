@@ -1,0 +1,55 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.107'
+}
+
+group = 'com.silentvector'
+base { archivesName = 'emi-structures' }
+version = '0.1.0'
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+tasks.withType(Jar).configureEach {
+    from('LICENSE') {
+        into 'META-INF'
+        rename { 'LICENSE_emi_structures' }
+    }
+}
+
+tasks.withType(ProcessResources).configureEach {
+    def replacements = [
+            minecraft_version      : providers.gradleProperty('minecraft_version').get(),
+            neoforge_version_range : providers.gradleProperty('neoforge_version_range').get(),
+            loader_version_range   : providers.gradleProperty('loader_version_range').get(),
+            emi_version            : providers.gradleProperty('emi_version').get(),
+            mod_version            : project.version
+    ]
+    inputs.properties replacements
+    filesMatching('META-INF/neoforge.mods.toml') { expand replacements }
+}
+
+repositories {
+    maven { name = 'TerraformersMC'; url = 'https://maven.terraformersmc.com/releases/' }
+}
+
+dependencies {
+    compileOnly "dev.emi:emi-neoforge:${providers.gradleProperty('emi_version').get()}:api"
+    runtimeOnly "dev.emi:emi-neoforge:${providers.gradleProperty('emi_version').get()}"
+}
+
+neoForge {
+    version = providers.gradleProperty('neoforge_version').get()
+    runs {
+        client { client(); gameDirectory = project.layout.projectDirectory.dir('run/client') }
+        server { server(); gameDirectory = project.layout.projectDirectory.dir('run/server'); programArgument '--nogui' }
+    }
+    mods { emi_structures { sourceSet sourceSets.main } }
+}

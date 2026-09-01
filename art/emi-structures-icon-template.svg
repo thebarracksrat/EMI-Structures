@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 16 16" shape-rendering="crispEdges">
+  <title>EMI Structures editable icon template</title>
+  <desc>Designed on a transparent 16 by 16 pixel grid. Hide the Guides group before export.</desc>
+
+  <!-- Transparent background. Add a rect here if you want a filled tile. -->
+  <g id="Background" />
+
+  <!-- Replace or recolor these pixel-aligned shapes to make the final icon. -->
+  <g id="Structure-Silhouette">
+    <path id="Shadow" fill="#352b3f" d="M2 6h2V4h2v2h4V4h2v2h2v8H2z" />
+    <path id="Main-Stone" fill="#8d7aa3" d="M3 6h2V5h1v2h4V5h1v2h2v6H3z" />
+    <path id="Highlight" fill="#b8a5ca" d="M4 7h2V6h1v2h4V7h1v2H4z" />
+  </g>
+
+  <g id="Door-And-Windows">
+    <path id="Door" fill="#241d2b" d="M7 10h2v3H7z" />
+    <path id="Windows" fill="#5be0d0" d="M4 9h1v1H4zm7 0h1v1h-1z" />
+  </g>
+
+  <g id="Ground">
+    <path fill="#594869" d="M1 14h14v1H1z" />
+  </g>
+
+  <!-- Delete or hide this group before exporting the final PNG. -->
+  <g id="Guides" opacity="0.16" pointer-events="none">
+    <path fill="none" stroke="#ffffff" stroke-width="0.03"
+          d="M1 0v16M2 0v16M3 0v16M4 0v16M5 0v16M6 0v16M7 0v16M8 0v16M9 0v16M10 0v16M11 0v16M12 0v16M13 0v16M14 0v16M15 0v16M0 1h16M0 2h16M0 3h16M0 4h16M0 5h16M0 6h16M0 7h16M0 8h16M0 9h16M0 10h16M0 11h16M0 12h16M0 13h16M0 14h16M0 15h16" />
+    <rect x="0.015" y="0.015" width="15.97" height="15.97" fill="none" stroke="#ffffff" stroke-width="0.03" />
+  </g>
+</svg>

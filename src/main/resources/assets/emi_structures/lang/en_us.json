@@ -1,0 +1,8 @@
+{
+  "modmenu.descriptionTranslation.emi_structures": "Shows where structures generate and which materials they can contain.",
+  "emi.category.emi_structures.structure_generation": "Structure Generation",
+  "emi_structures.materials": "Materials",
+  "emi_structures.estimated_range": "Estimated range",
+  "emi_structures.structure.source": "Source: %s",
+  "emi_structures.structure.click_hint": "View structure information"
+}

@@ -1,0 +1,16 @@
+.gradle/
+build/
+run/
+out/
+*.iml
+.idea/
+*~
+*.bak
+*.orig
+*.rej
+*.log
+crash-reports/
+logs/
+releases/
+design/
+docs/DESIGN_AND_IMPLEMENTATION_SPEC.md

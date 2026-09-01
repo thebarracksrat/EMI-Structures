@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="GPL-3.0-only"
+
+[[mods]]
+modId="emi_structures"
+version="${mod_version}"
+displayName="EMI Structures"
+authors="Silent Vector Studios"
+description='''Adds adaptive EMI recipes showing where structures generate and which materials they can contain.'''
+
+[[mixins]]
+config="emi_structures.mixins.json"
+
+[[dependencies.emi_structures]]
+modId="neoforge"
+type="required"
+versionRange="${neoforge_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.emi_structures]]
+modId="minecraft"
+type="required"
+versionRange="[${minecraft_version}]"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.emi_structures]]
+modId="emi"
+type="required"
+versionRange="[${emi_version},)"
+ordering="AFTER"
+side="CLIENT"
