@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "emi_structures",
+  "version": "${mod_version}",
+  "name": "EMI Structures",
+  "description": "Adds adaptive EMI recipes showing where structures generate and which materials they can contain.",
+  "authors": [
+    "Silent Vector Studios"
+  ],
+  "license": "GPL-3.0-only",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.silentvector.emistructures.EmiStructuresFabric"
+    ],
+    "emi": [
+      "com.silentvector.emistructures.compat.emi.EmiStructuresPlugin"
+    ]
+  },
+  "mixins": [
+    "emi_structures.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "emi": ">=${emi_version}",
+    "java": ">=21"
+  }
+}

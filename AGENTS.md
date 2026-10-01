@@ -5,6 +5,7 @@ Published Silent Vector Studios EMI addon for adaptive structure acquisition and
 ## Map
 
 - `common/` — shared analysis, mixins, EMI plugin/recipes/stacks, and assets.
+- `fabric/` — Fabric initializer, server lifecycle events, and `fabric.mod.json`.
 - `neoforge/` — NeoForge `@Mod` entry, events, and `neoforge.mods.toml`.
 - `art/` and `design/` — project-owned visual/design material.
 - `docs/` — durable project documentation.
@@ -17,15 +18,17 @@ Gradle properties in `gradle.properties`:
 
 - `mod_version` — semver (currently `0.1.1`)
 - `minecraft_version` — game target (currently `1.21.1`)
-- `loader` — jar suffix only (`neoforge`; not a separate semver channel)
+- `loader` — NeoForge jar suffix only (`neoforge`; not a separate semver channel). The Fabric jar suffix is `fabric`.
 
-Published version name: `${mod_version}+${minecraft_version}` (example: `0.1.1+1.21.1`)  
-NeoForge jar: `emi-structures-${mod_version}+${minecraft_version}-${loader}.jar`
+Published version name: `${mod_version}+${minecraft_version}` (example: `0.1.1+1.21.1`)
+NeoForge jar: `emi-structures-${mod_version}+${minecraft_version}-neoforge.jar`
+Fabric jar: `emi-structures-${mod_version}+${minecraft_version}-fabric.jar`
 
 ## Commands
 
 - Build and test on Windows: `.\gradlew.bat build`
 - NeoForge only: `.\gradlew.bat :neoforge:build`
+- Fabric only: `.\gradlew.bat :fabric:build`
 - Tests only: `.\gradlew.bat test`
 
 ## Rules

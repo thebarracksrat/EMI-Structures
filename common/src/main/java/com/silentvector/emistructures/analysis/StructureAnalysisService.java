@@ -2,6 +2,7 @@ package com.silentvector.emistructures.analysis;
 
 import com.mojang.logging.LogUtils;
 import com.silentvector.emistructures.data.MaterialInfo;
+import com.silentvector.emistructures.platform.StructurePickBlocks;
 import com.silentvector.emistructures.data.GenerationDetail;
 import com.silentvector.emistructures.data.StructureInfo;
 import com.silentvector.emistructures.data.StructureSnapshot;
@@ -162,7 +163,7 @@ public final class StructureAnalysisService {
                 .sorted(Map.Entry.comparingByKey(Comparator.comparing(ResourceLocation::toString)))
                 .map(entry -> {
                     List<Long> values = samples.getOrDefault(entry.getKey(), List.of());
-                    ResourceLocation itemId = displayItemId(entry.getKey());
+                    ResourceLocation itemId = displayItemId(server, entry.getKey());
                     if (itemId == null) {
                         return null;
                     }
@@ -189,8 +190,16 @@ public final class StructureAnalysisService {
                 .toList();
     }
 
-    private static ResourceLocation displayItemId(ResourceLocation blockId) {
-        var item = BuiltInRegistries.BLOCK.get(blockId).asItem();
+    private static ResourceLocation displayItemId(MinecraftServer server, ResourceLocation blockId) {
+        var block = BuiltInRegistries.BLOCK.get(blockId);
+        var item = block.asItem();
+        if (item == net.minecraft.world.item.Items.AIR) {
+            try {
+                item = StructurePickBlocks.itemFor(block, server.overworld());
+            } catch (RuntimeException ignored) {
+                return null;
+            }
+        }
         return item == net.minecraft.world.item.Items.AIR ? null : BuiltInRegistries.ITEM.getKey(item);
     }
 

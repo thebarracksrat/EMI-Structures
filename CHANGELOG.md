@@ -4,9 +4,10 @@ All notable changes to EMI Structures are documented here.
 
 ## 0.1.1
 
-- Restructured the 1.21.1 tree into MultiLoader modules (`common/` + `neoforge/`).
-- Published version naming is now `0.1.1+1.21.1` with jar suffix `-neoforge`.
-- Behavior is unchanged from 0.1.0 aside from the version bump and project layout.
+- Restructured the 1.21.1 tree into MultiLoader modules (`common/`, `neoforge/`, and `fabric/`).
+- Published version naming is `0.1.1+1.21.1` for both loaders, with jar suffixes `-neoforge` and `-fabric`.
+- Restored pick-block material lookup through a small per-loader helper.
+- Behavior is unchanged from 0.1.0 aside from the version bump, project layout, and Fabric support.
 
 ## 0.1.0
 

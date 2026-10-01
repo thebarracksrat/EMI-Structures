@@ -1,0 +1,90 @@
+plugins {
+    id 'fabric-loom'
+}
+
+base {
+    archivesName = 'emi-structures'
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    commonResources {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+    modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
+
+    compileOnly(project(':common'))
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
+}
+
+tasks.named('compileJava', JavaCompile).configure {
+    dependsOn(configurations.commonJava)
+    source(configurations.commonJava)
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    dependsOn(configurations.commonResources)
+    from(configurations.commonResources)
+
+    def replacements = [
+            minecraft_version     : minecraft_version,
+            fabric_loader_version : fabric_loader_version,
+            emi_version           : emi_version,
+            mod_version           : project.version
+    ]
+    inputs.properties replacements
+    filesMatching('fabric.mod.json') { expand replacements }
+}
+
+tasks.named('sourcesJar', Jar).configure {
+    dependsOn(configurations.commonJava)
+    from(configurations.commonJava)
+    dependsOn(configurations.commonResources)
+    from(configurations.commonResources)
+}
+
+tasks.named('jar', Jar).configure {
+    from(rootProject.file('LICENSE')) {
+        into 'META-INF'
+        rename { 'LICENSE_emi_structures' }
+    }
+}
+
+// emi-structures-0.1.1+1.21.1-fabric.jar
+// Loom's remapJar is the intermediary jar. The plain jar stays on Mojmap for dev.
+tasks.named('remapJar').configure {
+    archiveClassifier.set('fabric')
+}
+
+loom {
+    mixin {
+        defaultRefmapName.set('emi_structures.refmap.json')
+    }
+    runs {
+        client {
+            client()
+            ideConfigGenerated(true)
+            runDir('run/client')
+        }
+        server {
+            server()
+            ideConfigGenerated(true)
+            runDir('run/server')
+            programArg '--nogui'
+        }
+    }
+}
