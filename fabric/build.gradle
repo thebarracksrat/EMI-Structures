@@ -64,7 +64,7 @@ tasks.named('jar', Jar).configure {
     }
 }
 
-// emi-structures-0.1.1+1.21.1-fabric.jar
+// emi-structures-0.1.1+1.20.1-fabric.jar
 // Loom's remapJar is the intermediary jar. The plain jar stays on Mojmap for dev.
 tasks.named('remapJar').configure {
     archiveClassifier.set('fabric')

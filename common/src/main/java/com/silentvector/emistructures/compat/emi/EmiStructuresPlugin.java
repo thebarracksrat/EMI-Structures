@@ -12,9 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 @EmiEntrypoint
 public final class EmiStructuresPlugin implements EmiPlugin {
     public static final EmiRecipeCategory STRUCTURE_GENERATION = new EmiRecipeCategory(
-            ResourceLocation.fromNamespaceAndPath("emi_structures", "structure_generation"),
+            new ResourceLocation("emi_structures", "structure_generation"),
             new EmiTexture(
-                    ResourceLocation.fromNamespaceAndPath("emi_structures", "textures/gui/structure.png"),
+                    new ResourceLocation("emi_structures", "textures/gui/structure.png"),
                     0, 0, 16, 16, 16, 16, 16, 16));
 
     @Override

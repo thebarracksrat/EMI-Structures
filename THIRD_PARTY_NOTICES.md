@@ -8,11 +8,11 @@ EMI provides the recipe-viewing API and user interface that EMI Structures exten
 
 Project: https://github.com/emilyploszaj/emi
 
-## NeoForge
+## Minecraft Forge
 
-NeoForge provides the mod-loading and Minecraft integration APIs used by the NeoForge build.
+Minecraft Forge provides the mod-loading and Minecraft integration APIs used by the Forge build.
 
-Project: https://github.com/neoforged/NeoForge
+Project: https://github.com/MinecraftForge/MinecraftForge
 
 ## Fabric
 

@@ -4,7 +4,7 @@
   <img src="art/emi-structures-curseforge.png" alt="EMI Structures" width="192">
 </p>
 
-EMI Structures is a NeoForge and Fabric addon that adds adaptive structure information to [EMI](https://github.com/emilyploszaj/emi). It discovers supported structures from the active game, mods, and datapacks, then shows where each structure generates and which materials it can contain.
+EMI Structures is a Forge and Fabric addon that adds adaptive structure information to [EMI](https://github.com/emilyploszaj/emi). It discovers supported structures from the active game, mods, and datapacks, then shows where each structure generates and which materials it can contain.
 
 Instead of registering a separate recipe for every block and structure combination, each structure has one recipe with its own material pages. EMI's normal recipe and usage lookups both lead to that same entry.
 
@@ -19,8 +19,8 @@ Instead of registering a separate recipe for every block and structure combinati
 
 ## Requirements
 
-- Minecraft 1.21.1
-- NeoForge 21.1 or newer, or Fabric Loader 0.16.14 or newer with Fabric API
+- Minecraft 1.20.1
+- Forge 47 or newer, or Fabric Loader 0.16.14 or newer with Fabric API
 - EMI 1.1.24 or newer
 
 ## Using the mod
@@ -37,10 +37,10 @@ Dedicated-server synchronization and rebuilding after a datapack reload are not 
 
 Clone the repository and run `./gradlew build` (`gradlew.bat build` on Windows). The jars are:
 
-- `neoforge/build/libs/emi-structures-0.1.1+1.21.1-neoforge.jar`
-- `fabric/build/libs/emi-structures-0.1.1+1.21.1-fabric.jar`
+- `forge/build/libs/emi-structures-0.1.1+1.20.1-forge.jar`
+- `fabric/build/libs/emi-structures-0.1.1+1.20.1-fabric.jar`
 
-Java 21 is required. Shared code lives in `common/`. Loader entrypoints and metadata live in `neoforge/` and `fabric/`.
+Java 17 is required. Shared code lives in `common/`. Loader entrypoints and metadata live in `forge/` and `fabric/`.
 
 Version properties are defined in `gradle.properties`: `mod_version`, `minecraft_version`, and `loader`. The published version name is `mod_version+minecraft_version` for both loaders; the loader is only a jar suffix.
 

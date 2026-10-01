@@ -1,19 +1,19 @@
 plugins {
-    id 'net.neoforged.moddev'
+    id 'net.neoforged.moddev.legacyforge'
 }
 
 base {
     archivesName = 'emi-structures-common'
 }
 
-neoForge {
-    // Vanilla-mode: Minecraft classes without loader APIs for shared sources.
-    neoFormVersion = neo_form_version
+legacyForge {
+    // Vanilla Minecraft classes without loader APIs for shared sources.
+    mcpVersion = minecraft_version
 }
 
 dependencies {
-    compileOnly 'org.spongepowered:mixin:0.8.7'
-    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+    compileOnly 'org.spongepowered:mixin:0.8.5'
+    compileOnly "dev.emi:emi-xplat-mojmap:${emi_version}:api"
 }
 
 configurations {

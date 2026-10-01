@@ -25,8 +25,8 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
-import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
 import net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
@@ -233,7 +233,10 @@ public final class StructureAnalysisService {
                     chunkPos,
                     level,
                     ignored -> true);
-            BlockPos startPos = new BlockPos(chunkPos.getMiddleBlockX(), 64, chunkPos.getMiddleBlockZ());
+            int startY = settings.emiStructures$getStartHeight().sample(
+                    context.random(),
+                    new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
+            BlockPos startPos = new BlockPos(chunkPos.getMiddleBlockX(), startY, chunkPos.getMiddleBlockZ());
             var stub = JigsawPlacement.addPieces(
                     context,
                     settings.emiStructures$getStartPool(),
@@ -242,10 +245,7 @@ public final class StructureAnalysisService {
                     startPos,
                     settings.emiStructures$getUseExpansionHack(),
                     settings.emiStructures$getProjectStartToHeightmap(),
-                    settings.emiStructures$getMaxDistanceFromCenter(),
-                    PoolAliasLookup.create(settings.emiStructures$getPoolAliases(), startPos, sampleSeed),
-                    settings.emiStructures$getDimensionPadding(),
-                    settings.emiStructures$getLiquidSettings());
+                    settings.emiStructures$getMaxDistanceFromCenter());
             if (stub.isEmpty()) {
                 continue;
             }
@@ -559,13 +559,13 @@ public final class StructureAnalysisService {
     }
 
     private static String titleCase(String value) {
-        return readableName(ResourceLocation.fromNamespaceAndPath("emi_structures", value.toLowerCase(Locale.ROOT)));
+        return readableName(new ResourceLocation("emi_structures", value.toLowerCase(Locale.ROOT)));
     }
 
     private static String readableNamespace(String namespace) {
         if (namespace.equals("minecraft")) {
             return "Minecraft";
         }
-        return readableName(ResourceLocation.fromNamespaceAndPath(namespace, namespace)).replaceFirst("^.*: ", "");
+        return readableName(new ResourceLocation(namespace, namespace)).replaceFirst("^.*: ", "");
     }
 }

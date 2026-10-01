@@ -1,14 +1,17 @@
 plugins {
-    id 'net.neoforged.moddev'
+    id 'net.neoforged.moddev.legacyforge'
 }
 
 base {
     archivesName = 'emi-structures'
 }
 
-// emi-structures-0.1.1+1.21.1-neoforge.jar
+// emi-structures-0.1.1+1.20.1-forge.jar
 tasks.named('jar', Jar).configure {
     archiveClassifier = loader
+    manifest {
+        attributes 'MixinConfigs': 'emi_structures.mixins.json'
+    }
 }
 
 tasks.withType(Jar).configureEach {
@@ -20,34 +23,38 @@ tasks.withType(Jar).configureEach {
 
 tasks.withType(ProcessResources).configureEach {
     def replacements = [
-            minecraft_version      : minecraft_version,
-            neoforge_version_range : neoforge_version_range,
-            loader_version_range   : loader_version_range,
-            emi_version            : emi_version,
-            mod_version            : project.version
+            minecraft_version    : minecraft_version,
+            forge_version_range  : forge_version_range,
+            loader_version_range : loader_version_range,
+            emi_version          : emi_version,
+            mod_version          : project.version
     ]
     inputs.properties replacements
-    filesMatching('META-INF/neoforge.mods.toml') { expand replacements }
+    filesMatching('META-INF/mods.toml') { expand replacements }
 }
+
+sourceSets.main.resources.srcDir(project(':common').file('src/main/resources'))
 
 configurations {
     commonJava {
         canBeResolved = true
         canBeConsumed = false
     }
-    commonResources {
-        canBeResolved = true
-        canBeConsumed = false
-    }
 }
 
 dependencies {
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     compileOnly(project(':common'))
     commonJava project(path: ':common', configuration: 'commonJava')
-    commonResources project(path: ':common', configuration: 'commonResources')
 
-    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
-    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+    modCompileOnly "dev.emi:emi-forge:${emi_version}:api"
+    modRuntimeOnly "dev.emi:emi-forge:${emi_version}"
+}
+
+mixin {
+    add sourceSets.main, 'emi_structures.refmap.json'
+    config 'emi_structures.mixins.json'
 }
 
 tasks.named('compileJava', JavaCompile).configure {
@@ -55,20 +62,13 @@ tasks.named('compileJava', JavaCompile).configure {
     source(configurations.commonJava)
 }
 
-tasks.named('processResources', ProcessResources).configure {
-    dependsOn(configurations.commonResources)
-    from(configurations.commonResources)
-}
-
 tasks.named('sourcesJar', Jar).configure {
     dependsOn(configurations.commonJava)
     from(configurations.commonJava)
-    dependsOn(configurations.commonResources)
-    from(configurations.commonResources)
 }
 
-neoForge {
-    version = neoforge_version
+legacyForge {
+    version = forge_version
     runs {
         client {
             client()

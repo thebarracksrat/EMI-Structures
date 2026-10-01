@@ -54,7 +54,7 @@ final class StructureInfoRecipe implements EmiRecipe {
 
     @Override
     public ResourceLocation getId() {
-        return ResourceLocation.fromNamespaceAndPath("emi_structures",
+        return new ResourceLocation("emi_structures",
                 "/structure/" + structure.id().getNamespace() + "/" + structure.id().getPath());
     }
 

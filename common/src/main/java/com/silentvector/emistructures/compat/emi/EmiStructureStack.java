@@ -5,7 +5,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.render.EmiTexture;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 final class EmiStructureStack extends EmiStack {
     private static final EmiTexture ICON = new EmiTexture(
-            ResourceLocation.fromNamespaceAndPath("emi_structures", "textures/gui/structure.png"),
+            new ResourceLocation("emi_structures", "textures/gui/structure.png"),
             0, 0, 16, 16, 16, 16, 16, 16);
 
     private final StructureInfo structure;
@@ -37,8 +37,8 @@ final class EmiStructureStack extends EmiStack {
     }
 
     @Override
-    public DataComponentPatch getComponentChanges() {
-        return DataComponentPatch.EMPTY;
+    public CompoundTag getNbt() {
+        return null;
     }
 
     @Override

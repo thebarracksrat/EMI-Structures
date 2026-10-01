@@ -15,4 +15,4 @@ rootProject.name = 'emi-structures'
 
 include 'common'
 include 'fabric'
-include 'neoforge'
+include 'forge'
