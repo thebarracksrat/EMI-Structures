@@ -35,9 +35,11 @@ Dedicated-server synchronization and rebuilding after a datapack reload are not 
 
 ## Building from source
 
-Clone the repository and run `./gradlew build` (`gradlew.bat build` on Windows). The compiled mod will be placed in `build/libs`.
+Clone the repository and run `./gradlew build` (`gradlew.bat build` on Windows). The NeoForge jar is written to `neoforge/build/libs` as `emi-structures-0.1.1+1.21.1-neoforge.jar`.
 
-Java 21 is required.
+Java 21 is required. Shared code lives in `common/`; the NeoForge entrypoint and metadata live in `neoforge/`.
+
+Version properties are defined in `gradle.properties`: `mod_version`, `minecraft_version`, and `loader`. The published version name is `mod_version+minecraft_version`; the loader is only a jar suffix.
 
 ## License
 

@@ -1,0 +1,88 @@
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+base {
+    archivesName = 'emi-structures'
+}
+
+// emi-structures-0.1.1+1.21.1-neoforge.jar
+tasks.named('jar', Jar).configure {
+    archiveClassifier = loader
+}
+
+tasks.withType(Jar).configureEach {
+    from(rootProject.file('LICENSE')) {
+        into 'META-INF'
+        rename { 'LICENSE_emi_structures' }
+    }
+}
+
+tasks.withType(ProcessResources).configureEach {
+    def replacements = [
+            minecraft_version      : minecraft_version,
+            neoforge_version_range : neoforge_version_range,
+            loader_version_range   : loader_version_range,
+            emi_version            : emi_version,
+            mod_version            : project.version
+    ]
+    inputs.properties replacements
+    filesMatching('META-INF/neoforge.mods.toml') { expand replacements }
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    commonResources {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+    compileOnly(project(':common'))
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
+
+    compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+}
+
+tasks.named('compileJava', JavaCompile).configure {
+    dependsOn(configurations.commonJava)
+    source(configurations.commonJava)
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    dependsOn(configurations.commonResources)
+    from(configurations.commonResources)
+}
+
+tasks.named('sourcesJar', Jar).configure {
+    dependsOn(configurations.commonJava)
+    from(configurations.commonJava)
+    dependsOn(configurations.commonResources)
+    from(configurations.commonResources)
+}
+
+neoForge {
+    version = neoforge_version
+    runs {
+        client {
+            client()
+            gameDirectory = project.layout.projectDirectory.dir('run/client')
+        }
+        server {
+            server()
+            gameDirectory = project.layout.projectDirectory.dir('run/server')
+            programArgument '--nogui'
+        }
+    }
+    mods {
+        emi_structures {
+            sourceSet sourceSets.main
+        }
+    }
+}

@@ -36,8 +36,6 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleProcessor;
-import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.slf4j.Logger;
 
 import java.util.ArrayDeque;
@@ -61,9 +59,9 @@ public final class StructureAnalysisService {
     private StructureAnalysisService() {
     }
 
-    public static void onServerStarted(ServerStartedEvent event) {
+    public static void onServerStarted(MinecraftServer server) {
         long started = System.nanoTime();
-        StructureSnapshot snapshot = analyze(event.getServer());
+        StructureSnapshot snapshot = analyze(server);
         StructureSnapshots.publish(snapshot);
         long elapsedMillis = (System.nanoTime() - started) / 1_000_000L;
         LOGGER.info(
@@ -73,7 +71,7 @@ public final class StructureAnalysisService {
                 elapsedMillis);
     }
 
-    public static void onServerStopping(ServerStoppingEvent event) {
+    public static void onServerStopping() {
         StructureSnapshots.clear();
     }
 
@@ -164,7 +162,7 @@ public final class StructureAnalysisService {
                 .sorted(Map.Entry.comparingByKey(Comparator.comparing(ResourceLocation::toString)))
                 .map(entry -> {
                     List<Long> values = samples.getOrDefault(entry.getKey(), List.of());
-                    ResourceLocation itemId = displayItemId(server, entry.getKey());
+                    ResourceLocation itemId = displayItemId(entry.getKey());
                     if (itemId == null) {
                         return null;
                     }
@@ -191,16 +189,8 @@ public final class StructureAnalysisService {
                 .toList();
     }
 
-    private static ResourceLocation displayItemId(MinecraftServer server, ResourceLocation blockId) {
-        var block = BuiltInRegistries.BLOCK.get(blockId);
-        var item = block.asItem();
-        if (item == net.minecraft.world.item.Items.AIR) {
-            try {
-                item = block.getCloneItemStack(server.overworld(), BlockPos.ZERO, block.defaultBlockState()).getItem();
-            } catch (RuntimeException ignored) {
-                return null;
-            }
-        }
+    private static ResourceLocation displayItemId(ResourceLocation blockId) {
+        var item = BuiltInRegistries.BLOCK.get(blockId).asItem();
         return item == net.minecraft.world.item.Items.AIR ? null : BuiltInRegistries.ITEM.getKey(item);
     }
 
